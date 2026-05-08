@@ -15,5 +15,5 @@ docker run --rm livekit-server-local livekit-server --version
 Run the server:
 
 ```bash
-  docker run --rm --network=host livekit-server-local
+docker run --rm --network=host livekit-server-local
 ```
