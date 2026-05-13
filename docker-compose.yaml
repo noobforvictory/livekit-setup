@@ -12,6 +12,9 @@ services:
 
     network_mode: host
 
+    environment:
+      REDIS_HOST: localhost:6380
+
     depends_on:
       - redis
 

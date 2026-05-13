@@ -105,6 +105,40 @@ docker compose up -d --build redis livekit-server sip
 HOST_UID=$(id -u) HOST_GID=$(id -g) docker compose run --rm --build agent
 ```
 
+## Make An Outbound Telnyx Test Call
+
+For a raw SIP outbound call, start the local LiveKit, Redis, and SIP services:
+
+```bash
+cd /home/denis/livekit-learning
+docker compose up -d --build redis livekit-server sip
+```
+
+Then run the Telnyx test call script:
+
+```bash
+cd /home/denis/livekit-learning/sip/telnyx
+./scripts/call-test-number.sh
+```
+
+This script reads `sip/telnyx/.env`, uses `LIVEKIT_SIP_OUTBOUND_TRUNK_ID`, and
+dials `TELNYX_TEST_DESTINATION` through the Telnyx outbound trunk.
+
+If you have not created the trunk yet, create it first:
+
+```bash
+cd /home/denis/livekit-learning/sip/telnyx
+./scripts/create-outbound-trunk.sh
+```
+
+Copy the returned `SIPTrunkID` into `sip/telnyx/.env` as
+`LIVEKIT_SIP_OUTBOUND_TRUNK_ID=ST_...`. If the Python agent will place outbound
+calls, also copy the same trunk id and `TELNYX_PHONE_NUMBER` into
+`agent-starter-python/.env.local`.
+
+For Telnyx trial accounts, the destination number must be verified in Telnyx or
+the call can fail with `403 Forbidden`.
+
 ## Testing The Agent
 
 Voice test through Compose:
