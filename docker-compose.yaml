@@ -3,6 +3,7 @@ services:
   redis:
     image: redis:7-alpine
     network_mode: host
+    command: ["redis-server", "--port", "6380"]
 
   livekit-server:
     build:
@@ -29,3 +30,38 @@ services:
 
     volumes:
       - ./sip/config.yaml:/sip/config.yaml:ro
+
+  agent:
+    build:
+      context: ./agent-starter-python
+      dockerfile: Dockerfile
+
+    profiles:
+      - voice
+
+    network_mode: host
+
+    env_file:
+      - ./agent-starter-python/.env.local
+
+    command: ["python", "src/agent.py", "console"]
+
+    stdin_open: true
+    tty: true
+
+    user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+
+    environment:
+      XDG_RUNTIME_DIR: "${XDG_RUNTIME_DIR:-/run/user/1000}"
+      PULSE_SERVER: "unix:${XDG_RUNTIME_DIR:-/run/user/1000}/pulse/native"
+      PIPEWIRE_RUNTIME_DIR: "${XDG_RUNTIME_DIR:-/run/user/1000}"
+      PYTHONDONTWRITEBYTECODE: "1"
+
+    volumes:
+      - "${XDG_RUNTIME_DIR:-/run/user/1000}:${XDG_RUNTIME_DIR:-/run/user/1000}"
+
+    devices:
+      - /dev/snd:/dev/snd
+
+    depends_on:
+      - livekit-server

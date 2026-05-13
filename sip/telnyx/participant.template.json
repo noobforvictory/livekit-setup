@@ -1,0 +1,9 @@
+{
+  "sip_number": "${TELNYX_PHONE_NUMBER}",
+  "sip_trunk_id": "${LIVEKIT_SIP_OUTBOUND_TRUNK_ID}",
+  "sip_call_to": "${TELNYX_TEST_DESTINATION}",
+  "room_name": "telnyx-test-room",
+  "participant_identity": "telnyx-test-call",
+  "participant_name": "Telnyx test call",
+  "wait_until_answered": true
+}

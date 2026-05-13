@@ -1,0 +1,13 @@
+{
+  "trunk": {
+    "name": "Telnyx outbound trunk",
+    "address": "sip.telnyx.com",
+    "transport": "SIP_TRANSPORT_TCP",
+    "numbers": ["${TELNYX_PHONE_NUMBER}"],
+    "authUsername": "${TELNYX_SIP_USERNAME}",
+    "authPassword": "${TELNYX_SIP_PASSWORD}",
+    "headers_to_attributes": {
+      "X-Telnyx-Username": "${TELNYX_SIP_USERNAME}"
+    }
+  }
+}
