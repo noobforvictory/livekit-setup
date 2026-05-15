@@ -39,6 +39,19 @@ services:
       context: ./agent-starter-python
       dockerfile: Dockerfile
 
+    network_mode: host
+
+    env_file:
+      - ./agent-starter-python/.env.local
+
+    depends_on:
+      - livekit-server
+
+  agent-console:
+    build:
+      context: ./agent-starter-python
+      dockerfile: Dockerfile
+
     profiles:
       - voice
 
