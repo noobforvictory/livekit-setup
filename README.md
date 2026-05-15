@@ -34,6 +34,21 @@ docker compose logs --tail 80 agent
 docker compose logs --tail 80 sip
 ```
 
+## Debug SIP Traffic
+
+`ngrep` is useful when the logs do not explain a call setup problem. Keep this
+running while dispatching a test call to watch SIP requests and responses:
+
+```bash
+sudo ngrep -d any -W byline -t 'INVITE|ACK|BYE|CANCEL|REGISTER|OPTIONS|SIP/2.0' 'udp and port 5060'
+```
+
+Useful things to check:
+
+- `401` or `403` usually means trunk/auth configuration.
+- `404`, `480`, or `486` usually means destination/routing/availability.
+- No SIP traffic usually means the request is not reaching the local SIP service.
+
 ## Stop Everything
 
 ```bash
