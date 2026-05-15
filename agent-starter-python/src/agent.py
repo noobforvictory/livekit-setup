@@ -148,7 +148,7 @@ async def my_agent(ctx: JobContext):
             language=os.getenv("DEEPGRAM_LANGUAGE", "en"),
         ),
         llm=openai.LLM(
-            model=os.getenv("OPENAI_MODEL", "gpt-4.1-mini"),
+            model=os.getenv("OPENAI_MODEL", "gpt-4.0"),
         ),
         tts=azure.TTS(
             voice=os.getenv("AZURE_TTS_VOICE", "en-US-JennyNeural"),
